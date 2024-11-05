@@ -58,6 +58,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Siwar Arabic Lexicon](https://siwar.ksaa.gov.sa) for providing the API
 - All our [contributors](CONTRIBUTORS.md)
+- [API documentaion](https://siwar.ksaa.gov.sa/api-external)
 
 ## Support
 
