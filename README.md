@@ -1,27 +1,64 @@
-# siwar-api-python
-📚 Non-official Python wrapper for the Siwar Arabic Lexicon API (siwar.ksaa.gov.sa) - Comprehensive toolkit for accessing Arabic lexical data, word meanings, roots, patterns, and morphological information. 
+# Siwar API
 
 [![PyPI version](https://badge.fury.io/py/siwar-api.svg)](https://badge.fury.io/py/siwar-api)
-[![Python Package]([https://github.com/osama-ata/siwar-api-python/actions/workflows/python-package.yml/badge.svg)](https://github.com/osama-ata/siwar-api-python/actions/workflows/python-package.yml)
-[![codecov](https://codecov.io/gh/osama-ata/siwar-api-python/branch/main/graph/badge.svg)](https://codecov.io/gh/osama-ata/siwar-api-python)
-[![Documentation Status](https://readthedocs.org/projects/siwar-api-python/badge/?version=latest)](https://siwar-api-python.readthedocs.io/en/latest/?badge=latest)
+[![Python Package](https://github.com/osama-ata/siwar-api/actions/workflows/python-package.yml/badge.svg)](https://github.com/osama-ata/siwar-api/actions/workflows/python-package.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## 🌟 Features:
-- Full API coverage for public/private lexicon access
-- Rich Arabic language processing utilities
-- Type hints & comprehensive documentation
-- MIT Licensed
+A Python wrapper for the Siwar Arabic Lexicon API (siwar.ksaa.gov.sa). This library provides easy access to Arabic lexical data, word meanings, roots, patterns, and morphological information.
 
-## Topics:
-- python
-- arabic
-- nlp
-- lexicon
-- api-wrapper
-- arabic-nlp
-- dictionary-api
-- linguistics
-- morphology
-- siwar
-- ksaa
+## Installation
+
+```bash
+pip install siwar-api
+```
+
+## Quick Start
+
+```python
+from siwar import SiwarClient
+
+# Initialize the client
+client = SiwarClient(api_key='your-api-key')
+
+# Search in public entries
+results = client.search_public(query='محرك')
+
+# Get all public lexicons
+lexicons = client.get_public_lexicons()
+```
+
+## Features
+
+- Complete coverage of Siwar API endpoints
+- Support for both public and private lexicon access
+- Rich Arabic language processing utilities
+- Type hints for better IDE support
+- Comprehensive error handling
+- Detailed documentation
+
+## Documentation
+
+For full documentation and examples, visit our [GitHub Wiki](https://github.com/osama-ata/siwar-api/wiki).
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Siwar Arabic Lexicon](https://siwar.ksaa.gov.sa) for providing the API
+- All our [contributors](CONTRIBUTORS.md)
+
+## Support
+
+If you encounter any problems or have suggestions, please [open an issue](https://github.com/osama-ata/siwar-api/issues/new/choose).
