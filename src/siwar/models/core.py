@@ -48,19 +48,22 @@ class Sense:
 @dataclass
 class SearchResult:
     """Search result from API."""
+    # Required fields without defaults must come first
     lexical_entry_id: str
     lexicon_id: str
     lexicon_name: str
     lemma: str
     lemma_type: LemmaType
-    lemma_audio: Optional[str]
     pattern: str
-    senses: List[Sense] = field(default_factory=list)
     pos: PartOfSpeech
-    root: List[str] = field(default_factory=list)
-    word_forms: List[WordForm] = field(default_factory=list)
     non_diacritics_lemma: str
     lemma_language: str
+    
+    # Optional fields and fields with defaults follow
+    lemma_audio: Optional[str] = None
+    senses: List[Sense] = field(default_factory=list)
+    root: List[str] = field(default_factory=list)
+    word_forms: List[WordForm] = field(default_factory=list)
     is_word_form_match: bool = False
     is_dialect_match: bool = False
     is_lemmatizer: bool = False
@@ -73,8 +76,11 @@ class SearchResult:
 @dataclass
 class LexiconEntry:
     """Lexicon entry."""
+    # Required fields without defaults
     id: str
     name: str
+    
+    # Optional fields and fields with defaults
     title: Optional[str] = None
     version: Optional[str] = None
     version_date: Optional[str] = None
