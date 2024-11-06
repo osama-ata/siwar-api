@@ -1,4 +1,5 @@
-"""Models for the Siwar API wrapper."""
+# src/siwar/models/__init__.py
+"""Models package for Siwar API wrapper."""
 
 from .enums import LemmaType, PartOfSpeech, ExampleType
 from .core import (
