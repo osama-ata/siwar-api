@@ -6,6 +6,7 @@
 
 A Python wrapper for the Siwar Arabic Lexicon API (siwar.ksaa.gov.sa). This library provides easy access to Arabic lexical data, word meanings, roots, patterns, and morphological information.
 
+
 ## Installation
 
 ```bash
