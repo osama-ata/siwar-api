@@ -8,9 +8,6 @@ Basic usage:
     >>> from siwar import SiwarClient
     >>> client = SiwarClient('your-api-key')
     >>> results = client.search_public('محرك')
-
-:copyright: (c) 2024 by Osama Ata.
-:license: MIT, see LICENSE for more details.
 """
 
 from .client import SiwarClient
@@ -19,9 +16,12 @@ from .models import (
     LemmaType,
     PartOfSpeech,
     ExampleType,
+    WordForm,
+    Translation,
+    Example,
+    Sense,
     SearchResult,
     LexiconEntry,
-    WordForm
 )
 
 __version__ = "0.1.0"
@@ -35,7 +35,10 @@ __all__ = [
     "LemmaType",
     "PartOfSpeech",
     "ExampleType",
+    "WordForm",
+    "Translation",
+    "Example",
+    "Sense",
     "SearchResult",
     "LexiconEntry",
-    "WordForm",
 ]
