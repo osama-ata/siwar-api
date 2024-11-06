@@ -5,28 +5,29 @@ import pytest
 import responses
 from siwar import SiwarClient, SiwarAPIError, SiwarAuthError
 from siwar.constants import PUBLIC_ENDPOINTS, API_BASE_URL
-
-# Get API key from environment variable
-API_KEY = os.getenv("SIWAR_API_KEY", "test_api_key")
+from . import TEST_API_KEY, TEST_BASE_URL, SAMPLE_WORD, SAMPLE_LEXICON_ID
 
 @pytest.fixture
 def client():
     """Create a test client."""
-    return SiwarClient(API_KEY, API_BASE_URL)
+    return SiwarClient(
+        api_key=os.getenv("SIWAR_API_KEY", TEST_API_KEY),
+        base_url=TEST_BASE_URL
+    )
 
 @responses.activate
 def test_search_public(client):
     """Test public search endpoint."""
     mock_response = [
         {
-            "lexical_entry_id": "123",
+            "lexical_entry_id": SAMPLE_LEXICON_ID,
             "lexicon_id": "456",
             "lexicon_name": "Test Lexicon",
-            "lemma": "محرك",
+            "lemma": SAMPLE_WORD,
             "lemma_type": "singleWord",
             "pattern": "فاعل",
             "pos": "N",
-            "non_diacritics_lemma": "محرك",
+            "non_diacritics_lemma": SAMPLE_WORD,
             "lemma_language": "ar",
             "lemma_audio": None,
             "senses": []
@@ -35,15 +36,16 @@ def test_search_public(client):
     
     responses.add(
         responses.GET,
-        f"{API_BASE_URL}{PUBLIC_ENDPOINTS['search']}",
+        f"{TEST_BASE_URL}{PUBLIC_ENDPOINTS['search']}",
         json=mock_response,
         status=200
     )
     
-    results = client.search_public("محرك")
+    results = client.search_public(SAMPLE_WORD)
     assert len(results) == 1
-    assert results[0].lexical_entry_id == "123"
-    assert results[0].lemma == "محرك"
+    assert results[0].lexical_entry_id == SAMPLE_LEXICON_ID
+    assert results[0].lemma == SAMPLE_WORD
+
 
 @responses.activate
 def test_get_public_lexicons(client):
