@@ -41,3 +41,17 @@ PRIVATE_ENDPOINTS = {
     'pattern': '/api/v1/external/private/pattern',
     'conjugations': '/api/v1/external/private/conjugations',
 }
+
+# Arabic diacritics Unicode ranges
+ARABIC_DIACRITICS = '\u064B\u064C\u064D\u064E\u064F\u0650\u0651\u0652\u0670'
+
+# Error messages
+ERROR_MESSAGES = {
+    'auth_error': 'Authentication failed. Please check your API key.',
+    'invalid_params': 'Invalid parameters provided.',
+    'network_error': 'Network error occurred.',
+    'timeout_error': 'Request timed out.',
+    'rate_limit': 'API rate limit exceeded.',
+    'server_error': 'Server error occurred.',
+    'parse_error': 'Failed to parse API response.',
+}
