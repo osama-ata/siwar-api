@@ -14,17 +14,23 @@ pip install siwar-api
 
 ## Quick Start
 
+- Obtian an [API key](https://siwar.ksaa.gov.sa/developers).
+
 ```python
 from siwar import SiwarClient
 
-# Initialize the client
+# Initialize client
 client = SiwarClient(api_key='your-api-key')
 
-# Search in public entries
-results = client.search_public(query='محرك')
+# Search public entries
+results = client.search_public('محرك')
 
-# Get all public lexicons
+# Get lexicon information
 lexicons = client.get_public_lexicons()
+
+# Get word details
+senses = client.get_entry_senses('محرك')
+conjugations = client.get_entry_conjugations('محرك')
 ```
 
 ## Features
