@@ -1,31 +1,11 @@
-# src/siwar/__init__.py
-"""
-Siwar API Python Wrapper
-~~~~~~~~~~~~~~~~~~~~~~~
-
-A Python wrapper for the Siwar Arabic Lexicon API.
-
-Basic usage:
-    >>> from siwar import SiwarClient
-    >>> client = SiwarClient('your-api-key')
-    >>> results = client.search_public('محرك')
-"""
+"""Siwar API Python Wrapper"""
 
 from .client import SiwarClient
 from .exceptions import SiwarAPIError, SiwarAuthError
+from .models.core import SearchResult, LexiconEntry, WordForm, Translation, Example, Sense
 from .models.enums import LemmaType, PartOfSpeech, ExampleType
-from .models.core import (
-    WordForm,
-    Translation,
-    Example,
-    Sense,
-    SearchResult,
-    LexiconEntry,
-)
 
 __version__ = "0.1.0"
-__author__ = "Osama Ata"
-__license__ = "MIT"
 
 __all__ = [
     "SiwarClient",
@@ -37,7 +17,7 @@ __all__ = [
     "WordForm",
     "Translation",
     "Example",
-    "Sense", 
+    "Sense",
     "SearchResult",
     "LexiconEntry",
 ]
