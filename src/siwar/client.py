@@ -1,16 +1,17 @@
+# src/siwar/client.py
 """Siwar API client implementation."""
 
 from typing import List, Optional, Dict, Any, cast
 import requests
 
 from .exceptions import SiwarAPIError, SiwarAuthError
-from .models import SearchResult, LexiconEntry
+from .models.core import SearchResult, LexiconEntry
 from .constants import API_BASE_URL, DEFAULT_TIMEOUT
 
 
 class SiwarClient:
     """A Python client for the Siwar API."""
-
+    
     def __init__(
         self,
         api_key: str,
