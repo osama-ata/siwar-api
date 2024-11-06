@@ -1,24 +1,16 @@
-# src/siwar/models/__init__.py
-"""Models package for Siwar API wrapper."""
+"""Models package for Siwar API."""
 
+from .core import SearchResult, LexiconEntry, WordForm, Translation, Example, Sense
 from .enums import LemmaType, PartOfSpeech, ExampleType
-from .core import (
-    WordForm,
-    Translation,
-    Example,
-    Sense,
-    SearchResult,
-    LexiconEntry,
-)
 
 __all__ = [
-    'LemmaType',
-    'PartOfSpeech',
-    'ExampleType',
-    'WordForm',
-    'Translation',
-    'Example',
-    'Sense',
-    'SearchResult',
-    'LexiconEntry',
+    "LemmaType",
+    "PartOfSpeech", 
+    "ExampleType",
+    "WordForm",
+    "Translation",
+    "Example",
+    "Sense",
+    "SearchResult",
+    "LexiconEntry",
 ]
