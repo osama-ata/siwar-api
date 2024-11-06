@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -11,9 +11,9 @@ setup(
     description="Python wrapper for the Siwar Arabic Lexicon API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/siwar-api",
+    url="https://github.com/osama-ata/siwar-api",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/siwar-api/issues",
+        "Bug Tracker": "https://github.com/osama-ata/siwar-api/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -21,7 +21,7 @@ setup(
         "Operating System :: OS Independent",
     ],
     package_dir={"": "src"},
-    packages=find_packages(where="src"),
+    packages=find_namespace_packages(where="src", include=["siwar", "siwar.*"]),
     python_requires=">=3.7",
     install_requires=[
         "requests>=2.25.0",
