@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,10 +7,14 @@ name = "siwar-api"
 version = "0.1.0"
 description = "Python wrapper for the Siwar Arabic Lexicon API"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 license = {text = "MIT"}
 authors = [
-    {name = "Osama Ata", email = "me@osamata.com"},
+    {name = "Osama Ata", email = "me@osamata.com"}
+]
+dependencies = [
+    "requests>=2.25.0",
+    "python-dateutil>=2.8.2",
 ]
 
 [project.optional-dependencies]
@@ -21,4 +25,9 @@ dev = [
     "flake8>=3.9.0",
     "black>=22.0.0",
     "isort>=5.9.0",
+    "types-requests>=2.25.0",
 ]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["siwar"]
