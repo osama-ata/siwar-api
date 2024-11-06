@@ -4,12 +4,20 @@ from typing import List, Optional, Dict, Any, cast
 import requests
 
 from .exceptions import SiwarAPIError, SiwarAuthError
-from .models.core import SearchResult, LexiconEntry
-from .constants import API_BASE_URL, DEFAULT_TIMEOUT
+from .models.core import SearchResult, LexiconEntry, Example, Sense
+from .constants import (
+    API_BASE_URL, 
+    DEFAULT_TIMEOUT, 
+    PUBLIC_ENDPOINTS
+)
 
 
 class SiwarClient:
-    """A Python client for the Siwar API."""
+    """
+    A Python client for the Siwar API.
+    
+    Currently implements public endpoints only. Private endpoints will be added in future versions.
+    """
     
     def __init__(
         self,
@@ -73,37 +81,7 @@ class SiwarClient:
         if lexicon_ids:
             params['lexiconIds'] = ','.join(lexicon_ids)
             
-        data = self._make_request(
-            'GET', 
-            '/api/v1/external/public/search', 
-            params=params
-        )
-        return [SearchResult(**result) for result in data]
-
-    def search_private(
-        self, 
-        query: str, 
-        lexicon_ids: List[str]
-    ) -> List[SearchResult]:
-        """
-        Search in private entries.
-        
-        Args:
-            query: The query string to search for
-            lexicon_ids: List of lexicon IDs to search in (required)
-            
-        Returns:
-            List of search results
-        """
-        params = {
-            'query': query,
-            'lexiconIds': ','.join(lexicon_ids)
-        }
-        data = self._make_request(
-            'GET', 
-            '/api/v1/external/private/search', 
-            params=params
-        )
+        data = self._make_request('GET', PUBLIC_ENDPOINTS['search'], params=params)
         return [SearchResult(**result) for result in data]
 
     def get_public_lexicons(self) -> List[LexiconEntry]:
@@ -113,33 +91,64 @@ class SiwarClient:
         Returns:
             List of lexicon entries
         """
-        data = self._make_request('GET', '/api/v1/external/public/lexicons')
+        data = self._make_request('GET', PUBLIC_ENDPOINTS['lexicons'])
         return [LexiconEntry(**lexicon) for lexicon in data]
 
-    def get_entry_senses(
+    def get_public_senses(
         self, 
         query: str, 
-        lexicon_ids: Optional[List[str]] = None,
-        private: bool = False
-    ) -> Dict:
+        lexicon_ids: Optional[List[str]] = None
+    ) -> List[Sense]:
         """
-        Get entry senses.
+        Get sense information for a word from public lexicons.
         
         Args:
-            query: The query string
-            lexicon_ids: List of lexicon IDs (required for private search)
-            private: Whether to search in private lexicons
+            query: The word to look up
+            lexicon_ids: Optional list of lexicon IDs to search in
             
         Returns:
-            Entry senses information
+            List of word senses
         """
-        access_type = 'private' if private else 'public'
         params = {'query': query}
-        if lexicon_ids or private:
+        if lexicon_ids:
             params['lexiconIds'] = ','.join(lexicon_ids)
             
-        return self._make_request(
-            'GET', 
-            f'/api/v1/external/{access_type}/senses',
-            params
+        data = self._make_request('GET', PUBLIC_ENDPOINTS['senses'], params=params)
+        return [Sense(**sense) for sense in data]
+
+    def get_public_examples(
+        self, 
+        query: str, 
+        lexicon_ids: Optional[List[str]] = None
+    ) -> List[Example]:
+        """
+        Get example usages of a word from public lexicons.
+        
+        Args:
+            query: The word to look up
+            lexicon_ids: Optional list of lexicon IDs to search in
+            
+        Returns:
+            List of examples
+        """
+        params = {'query': query}
+        if lexicon_ids:
+            params['lexiconIds'] = ','.join(lexicon_ids)
+            
+        data = self._make_request('GET', PUBLIC_ENDPOINTS['examples'], params=params)
+        return [Example(**example) for example in data]
+
+    # TODO: Implement other public endpoints:
+    # - get_public_synonyms
+    # - get_public_opposites
+    # - get_public_pos
+    # - get_public_root
+    # - get_public_pattern
+    # - get_public_conjugations
+
+    def _private_endpoint_warning(self) -> None:
+        """Raise warning about unimplemented private endpoints."""
+        raise NotImplementedError(
+            "Private endpoints are not implemented in this version. "
+            "They will be added in a future release."
         )
