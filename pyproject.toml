@@ -26,8 +26,14 @@ dev = [
     "black>=22.0.0",
     "isort>=5.9.0",
     "types-requests>=2.25.0",
+    "responses>=0.23.0",
 ]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
 packages = ["siwar"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "--cov=siwar --cov-report=xml --cov-report=term-missing"
