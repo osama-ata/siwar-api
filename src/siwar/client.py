@@ -30,7 +30,7 @@ class SiwarClient:
         self,
         method: str,
         endpoint: str,
-        params: Optional[Dict[str, Any]] = None,
+        params: Optional[Dict[str, str]] = None,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Make HTTP request to the API."""
