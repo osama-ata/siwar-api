@@ -1,8 +1,8 @@
 """Siwar API client implementation."""
 
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, cast
 import requests
-from requests.models import Response
+
 from .exceptions import SiwarAPIError, SiwarAuthError
 from .models import SearchResult, LexiconEntry
 from .constants import API_BASE_URL, DEFAULT_TIMEOUT
@@ -17,11 +17,10 @@ class SiwarClient:
         base_url: str = API_BASE_URL,
         timeout: int = DEFAULT_TIMEOUT
     ) -> None:
-        """Initialize the client."""
         self.api_key = api_key
         self.base_url = base_url.rstrip('/')
         self.timeout = timeout
-        self.session: requests.Session = requests.Session()
+        self.session = requests.Session()
         self.session.headers.update({
             'apikey': self.api_key,
             'Accept': 'application/json'
@@ -38,7 +37,7 @@ class SiwarClient:
         url = f"{self.base_url}{endpoint}"
 
         try:
-            response: Response = self.session.request(
+            response = self.session.request(
                 method=method,
                 url=url,
                 params=params,
@@ -46,7 +45,7 @@ class SiwarClient:
                 timeout=self.timeout
             )
             response.raise_for_status()
-            return response.json()
+            return cast(Dict[str, Any], response.json())
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 401:
                 raise SiwarAuthError("Invalid API key")
