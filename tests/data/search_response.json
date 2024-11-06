@@ -1,0 +1,15 @@
+[
+    {
+        "lexical_entry_id": "123",
+        "lexicon_id": "456",
+        "lexicon_name": "Test Lexicon",
+        "lemma": "محرك",
+        "lemma_type": "singleWord",
+        "pattern": "فاعل",
+        "pos": "N",
+        "non_diacritics_lemma": "محرك",
+        "lemma_language": "ar",
+        "lemma_audio": null,
+        "senses": []
+    }
+]
