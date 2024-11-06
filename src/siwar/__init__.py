@@ -1,3 +1,4 @@
+# src/siwar/__init__.py
 """
 Siwar API Python Wrapper
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -12,10 +13,8 @@ Basic usage:
 
 from .client import SiwarClient
 from .exceptions import SiwarAPIError, SiwarAuthError
-from .models import (
-    LemmaType,
-    PartOfSpeech,
-    ExampleType,
+from .models.enums import LemmaType, PartOfSpeech, ExampleType
+from .models.core import (
     WordForm,
     Translation,
     Example,
@@ -38,7 +37,7 @@ __all__ = [
     "WordForm",
     "Translation",
     "Example",
-    "Sense",
+    "Sense", 
     "SearchResult",
     "LexiconEntry",
 ]
