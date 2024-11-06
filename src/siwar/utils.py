@@ -1,10 +1,10 @@
-"""
-Utility functions for the Siwar API wrapper.
-"""
+"""Utility functions for Siwar API."""
 
+from typing import Dict, List, Optional, cast
 import re
-from typing import List, Dict, Optional
-from .constants import ARABIC_DIACRITICS
+import json
+
+from .constants import ARABIC_DIACRITICS, ERROR_MESSAGES
 
 def strip_diacritics(text: str) -> str:
     """
@@ -12,88 +12,72 @@ def strip_diacritics(text: str) -> str:
     
     Args:
         text: Arabic text with diacritics
-        
+            
     Returns:
         Text without diacritics
     """
-    return re.sub(f'[{ARABIC_DIACRITICS}]', '', text)
+    # Arabic diacritics regex pattern
+    diacritics = re.compile(f'[{ARABIC_DIACRITICS}]')
+    return diacritics.sub('', text)
 
-def validate_query(query: str) -> bool:
-    """
-    Validate search query string.
-    
-    Args:
-        query: Query string to validate
-        
-    Returns:
-        bool: True if valid, False otherwise
-    """
-    if not query or not isinstance(query, str):
-        return False
-    return bool(query.strip())
-
-def validate_lexicon_ids(lexicon_ids: Optional[List[str]]) -> bool:
-    """
-    Validate lexicon IDs.
-    
-    Args:
-        lexicon_ids: List of lexicon IDs to validate
-        
-    Returns:
-        bool: True if valid, False otherwise
-    """
-    if lexicon_ids is None:
-        return True
-    if not isinstance(lexicon_ids, list):
-        return False
-    return all(isinstance(id_, str) and id_.strip() for id_ in lexicon_ids)
-
-def build_query_params(
-    query: str,
-    lexicon_ids: Optional[List[str]] = None
-) -> Dict[str, str]:
-    """
-    Build query parameters for API requests.
-    
-    Args:
-        query: Search query
-        lexicon_ids: Optional list of lexicon IDs
-        
-    Returns:
-        Dictionary of query parameters
-    """
-    params = {'query': query}
-    if lexicon_ids:
-        params['lexiconIds'] = ','.join(lexicon_ids)
-    return params
-
-def format_error_message(error_code: str, details: Optional[str] = None) -> str:
+def format_error_message(error_type: str, details: Optional[str] = None) -> str:
     """
     Format error message with optional details.
     
     Args:
-        error_code: Error code from constants.ERROR_MESSAGES
-        details: Optional additional error details
-        
+        error_type: Type of error from ERROR_MESSAGES
+        details: Additional error details
+            
     Returns:
         Formatted error message
     """
-    from .constants import ERROR_MESSAGES
-    message = ERROR_MESSAGES.get(error_code, 'Unknown error occurred')
+    message = ERROR_MESSAGES.get(error_type, 'An unknown error occurred')
     if details:
         message = f"{message} Details: {details}"
     return message
 
-def is_valid_api_key(api_key: str) -> bool:
+def format_lexicon_ids(lexicon_ids: Optional[List[str]]) -> Optional[str]:
+    """
+    Format lexicon IDs for API requests.
+    
+    Args:
+        lexicon_ids: List of lexicon IDs
+            
+    Returns:
+        Comma-separated string of lexicon IDs or None
+    """
+    if not lexicon_ids:
+        return None
+    return ','.join(lexicon_ids)
+
+def parse_response(response_text: str, error_on_empty: bool = True) -> Dict:
+    """
+    Parse JSON response text.
+    
+    Args:
+        response_text: JSON response string
+        error_on_empty: Whether to raise error for empty response
+            
+    Returns:
+        Parsed JSON data
+    """
+    try:
+        data = json.loads(response_text)
+        if error_on_empty and not data:
+            raise ValueError(format_error_message('parse_error', 'Empty response'))
+        return cast(Dict, data)
+    except json.JSONDecodeError as e:
+        raise ValueError(format_error_message('parse_error', str(e)))
+
+def validate_api_key(api_key: str) -> None:
     """
     Validate API key format.
     
     Args:
         api_key: API key to validate
-        
-    Returns:
-        bool: True if valid format, False otherwise
+            
+    Raises:
+        ValueError: If API key is invalid
     """
     if not api_key or not isinstance(api_key, str):
-        return False
-    return bool(api_key.strip())
+        raise ValueError(format_error_message('auth_error', 'Invalid API key format'))
