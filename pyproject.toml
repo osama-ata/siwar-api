@@ -7,11 +7,23 @@ name = "siwar-api"
 version = "0.1.0"
 description = "Python wrapper for the Siwar Arabic Lexicon API"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
-    {name = "Osama Ata", email = "me@osamata.com"}
+    {name = "Osama Ata", email = "osama.ata@outlook.com"}
 ]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+]
+keywords = ["arabic", "dictionary", "lexicon", "nlp", "language"]
 dependencies = [
     "requests>=2.25.0",
     "python-dateutil>=2.8.2",
@@ -21,7 +33,7 @@ dependencies = [
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=3.0.0",
-    "mypy>=0.910",
+    "mypy>=1.0.0",
     "flake8>=3.9.0",
     "black>=22.0.0",
     "isort>=5.9.0",
@@ -29,11 +41,66 @@ dev = [
     "responses>=0.23.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/osama-ata/siwar-api"
+Repository = "https://github.com/osama-ata/siwar-api.git"
+"Bug Tracker" = "https://github.com/osama-ata/siwar-api/issues"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = ["siwar"]
+packages = ["siwar", "siwar.models"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"
 addopts = "--cov=siwar --cov-report=xml --cov-report=term-missing"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+    "ignore::UserWarning",
+]
+
+[tool.coverage.run]
+source = ["siwar"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError",
+]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+ignore_missing_imports = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_optional = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
